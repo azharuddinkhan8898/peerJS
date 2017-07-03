@@ -1,18 +1,60 @@
 <!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Document</title>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
 </head>
 
 <body>
+  <input class="id" type="text"> enter your ID
+  <button class="submit">submit</button>
+  <br/>
+  <br/>
+  <input class="idc" type="text"> enter ID (connect with)
+  <button class="submitC">submit</button>
+  <br/>
+  <br/>
+  <input class="msg" type="text"> enter msg
+  <button class="msgsend">submit</button>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.14/peer.js"></script>
+  <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
   <script>
-  var peer = new Peer({key: 'lwjd5qra8257b9'});
-  peer.on('open', function(id) {
-    console.log('My peer ID is: ' + id);
+  //var peer = new Peer({key: 'lwjd5qra8257b9'});
+  $(function() {
+    $(".submit").click(function() {
+      var randomID = $(".id").val();
+      var conn;
+      var connectID;
+      var peer = new Peer(randomID, {
+        host: 'localhost',
+        port: 9000,
+        path: '/'
+      });
+      peer.on('open', function(id) {
+        console.log('My peer ID is: ' + id);
+        $(".submitC").click(function() {
+          connectID = $(".idc").val();
+          conn = peer.connect(connectID);
+          conn.on('open', function() {
+            $(".msgsend").click(function() {
+              var msg = $(".msg").val();
+              conn.send(msg);
+            });
+            conn.on('data', function(data) {
+              console.log("aa");
+              console.log('Received', data);
+            });
+          });
+        });
+
+      });
+      peer.on('connection', function(conn) {
+        console.log(conn.peer + " is connected with you");
+      });
+    });
+
+
   });
   </script>
 </body>
