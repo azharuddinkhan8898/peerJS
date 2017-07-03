@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
+  <script>
+  var peer = new Peer({key: 'lwjd5qra8257b9'});
+  peer.on('open', function(id) {
+    console.log('My peer ID is: ' + id);
+  });
+  </script>
+</body>
+
+</html>
