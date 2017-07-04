@@ -27,7 +27,7 @@
       var conn;
       var connectID;
       var peer = new Peer(randomID, {
-        host: 'localhost',
+        host: '140.10.2.14',
         port: 9000,
         path: '/'
       });
@@ -41,16 +41,29 @@
               var msg = $(".msg").val();
               conn.send(msg);
             });
-            conn.on('data', function(data) {
-              console.log("aa");
-              console.log('Received', data);
-            });
+            // conn.on('data', function(data) {
+            //   console.log("aa");
+            //   console.log('Received', data);
+            // });
           });
         });
 
       });
       peer.on('connection', function(conn) {
+        // var wantToConnect = confirm(conn.peer + " is wanted to connect with you");
+        // if (wantToConnect == true) {
+        //   console.log(conn.peer + " is connected with you");
+        //   conn.on('data', function(data) {
+        //     console.log('Received', data);
+        //   });
+        // }
+        // else{
+        //   console.log("reject");
+        // }
         console.log(conn.peer + " is connected with you");
+        conn.on('data', function(data) {
+          console.log('Received', data);
+        });
       });
     });
 
