@@ -60,11 +60,16 @@
   firebase.initializeApp(config);
   var ref = firebase.database().ref('users/');
   ref.set({
-    user1:{
-      userName:"azharuddin",
-      userEmail:"azharuddinkhan8898@gmail.com",
-      userID:"azhar"
+    user1: {
+      userName: "azharuddin",
+      userEmail: "azharuddinkhan8898@gmail.com",
+      userID: "azhar"
     }
+  });
+  ref.on("value", function(snapshot) {
+    console.log(snapshot.val().user1);
+  }, function(error) {
+    console.log("Error: " + error.code);
   });
   console.log(ref);
   </script>
