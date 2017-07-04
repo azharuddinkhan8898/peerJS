@@ -4,19 +4,70 @@
 <html lang="en">
 
 <head>
+  <style>
+  .idEx {
+    color: red;
+    font-size: 12px;
+    display: inline-block;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  .sendMsg {
+    position: absolute;
+    bottom: 50px;
+  }
+  
+  .msgsBox {
+    border: 1px solid;
+    height: 70%;
+    position: absolute;
+    width: 70%;
+    overflow: auto;
+    padding: 0px 10px;
+  }
+  </style>
 </head>
 
 <body>
-  <input class="id" type="text"> enter your ID
+  <input class="id" type="text" placeholder="enter your ID">
   <button class="submit">submit</button>
-  <br/>
-  <br/>
-  <input class="idc" type="text"> enter ID (connect with)
+  <p class="idEx hide">This ID is unavailable</p>
+  <input class="idc" type="text" placeholder="enter ID (connect with)">
   <button class="submitC">submit</button>
   <br/>
   <br/>
-  <input class="msg" type="text"> enter msg
-  <button class="msgsend">submit</button>
+  <div class="sendMsg">
+    <input class="msg" type="text" placeholder="enter your msg">
+    <button class="msgsend">send</button>
+  </div>
+  <br/>
+  <br/>
+  <div class="msgsBox"></div>
+  <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+  <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBIFhWNDNvSYcBKC_m94MiSuJtY9sSpniA",
+    authDomain: "test-dad75.firebaseapp.com",
+    databaseURL: "https://test-dad75.firebaseio.com",
+    projectId: "test-dad75",
+    storageBucket: "",
+    messagingSenderId: "104043201651"
+  };
+  firebase.initializeApp(config);
+  var ref = firebase.database().ref('users/');
+  ref.set({
+    user1:{
+      userName:"azharuddin",
+      userEmail:"azharuddinkhan8898@gmail.com",
+      userID:"azhar"
+    }
+  });
+  console.log(ref);
+  </script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="http://cdn.peerjs.com/0.3/peer.min.js"></script>
   <script>
@@ -40,6 +91,8 @@
             $(".msgsend").click(function() {
               var msg = $(".msg").val();
               conn.send(msg);
+              $(".msg").val("");
+              $(".msgsBox").append("<p>you: " + msg);
             });
             // conn.on('data', function(data) {
             //   console.log("aa");
@@ -47,27 +100,41 @@
             // });
           });
         });
-
       });
       peer.on('connection', function(conn) {
-        // var wantToConnect = confirm(conn.peer + " is wanted to connect with you");
-        // if (wantToConnect == true) {
-        //   console.log(conn.peer + " is connected with you");
-        //   conn.on('data', function(data) {
-        //     console.log('Received', data);
-        //   });
-        // }
-        // else{
-        //   console.log("reject");
+        // if (conn.peer != connectID) {
+        //   var wantToConnect = confirm(conn.peer + " is wanted to connect with you");
+        //   if (wantToConnect == true) {
+        //     conn = peer.connect(conn.peer);
+        //     console.log(conn.peer + " is connected with you");
+        //     conn.on('data', function(data) {
+        //       console.log('Received', data);
+        //     });
+        //   } else {
+        //     console.log("reject");
+        //   }
         // }
         console.log(conn.peer + " is connected with you");
         conn.on('data', function(data) {
           console.log('Received', data);
+          $(".msgsBox").append("<p>" + conn.peer + " : " + data);
         });
       });
+      peer.on('error', function(err) {
+        console.log(err);
+        if (err.type == 'unavailable-id') {
+          $(".idEx").removeClass("hide");
+        }
+      })
     });
 
-
+    $(".msg").keypress(function(e) {
+      var key = e.which;
+      if (key == 13) {
+        $(".msgsend").click();
+        return false;
+      }
+    });
   });
   </script>
 </body>
