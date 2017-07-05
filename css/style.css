@@ -1,0 +1,56 @@
+/* body{
+  margin: 0px;
+  padding: 0px;
+} */
+
+.idEx,
+.idNotEx {
+  color: red;
+  font-size: 12px;
+  display: inline-block;
+}
+
+.hide {
+  display: none;
+}
+.msgsBox {
+    margin-left: 30px;
+}
+.sendMsg {
+  position: absolute;
+  bottom: 50px;
+}
+
+.chatPage {
+  position: absolute;
+  width: 95%;
+  height: 95%;
+}
+
+.chatPage > div {
+  box-sizing: border-box;
+  width: 40%;
+  float: left;
+  height: 100%;
+  border: 1px solid;
+}
+
+.sendMsg {
+  position: absolute;
+  bottom: 10px;
+  margin-left: 10px;
+}
+
+.chatPage {
+  display: none;
+}
+
+.signIn input {
+  margin-bottom: 10px;
+}
+.div1 ul li{
+  cursor: pointer;
+}
+.div1 ul li:hover{
+  text-decoration: underline;
+}
