@@ -1,5 +1,5 @@
 $(function () {
-  //var peer = new Peer({key: 'lwjd5qra8257b9'});
+  var peer = new Peer({key: 'lwjd5qra8257b9'});
   var conn;
   var connectID;
   var randomID;
@@ -42,11 +42,11 @@ $(function () {
           $(".signIn").hide();
           $(".chatPage").show();
           console.log("logged in as " + data.val().name);
-          peer = new Peer(randomID, {
-            host: '140.10.2.14',
-            port: 9000,
-            path: '/'
-          });
+          //peer = new Peer(randomID, {
+          //  host: '140.10.2.14',
+          //  port: 9000,
+           // path: '/'
+         // });
           peer.on('open', function (id) {
             console.log('My peer ID is: ' + id);
             ref.orderByChild("name").on("child_added", function (data) {
